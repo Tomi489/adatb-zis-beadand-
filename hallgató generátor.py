@@ -11,7 +11,7 @@ import datetime
 import os
 
 os.remove(r'C:\Users\tomir\Documents\adatbázis beadandó\hallgatók.json')
-#os.remove(r'C:\Users\tomir\Documents\adatbázis beadandó\szakok.json') 
+os.remove(r'C:\Users\tomir\Documents\adatbázis beadandó\szakok.json') 
 print("fájlok törölve")
 
 def randomDate():
@@ -52,13 +52,15 @@ def telefonGenerator():
     return "+36"+str(random.randint(100000000, 999999999))
 
 hallgatokszama=[0,0,0,0,0,0,0]
+hallgatoklista=[]
 
 def hallgatóGenerator():
     vezetéknév, keresztnév=nevGenerator()
+    hallgatoklista.append(vezetéknév+" "+keresztnév)
     irányítószám, utca, házszám=címGenerator()
     email=emailGenerator(vezetéknév, keresztnév)
     jelszó=jelszóGenerator()
-    születésiDátum=randomDate()
+    születésiDátum=datumGenerátor(1990, 2004)
     szak=random.choice(szakok)
     for i in range(7):
         if szak==szakok[i]:
@@ -66,6 +68,15 @@ def hallgatóGenerator():
     telefon=telefonGenerator()
     hallgató={"vezetéknév": vezetéknév, "keresztnév": keresztnév, "irányítószám": irányítószám, "utca": utca, "házszám": házszám, "email": email, "jelszó": jelszó, "születésiDátum": str(születésiDátum), "szak": szak, "telefon": telefon}
     return hallgató
+
+def datumGenerátor(tól, ig):
+    start_date = datetime.date(tól, 1, 1)
+    end_date = datetime.date(ig, 1, 1)
+    time_between_dates = end_date - start_date
+    days_between_dates = time_between_dates.days
+    random_number_of_days = random.randrange(days_between_dates)
+    random_date = start_date + datetime.timedelta(days=random_number_of_days)
+    return random_date
 
 hallgatók=[]
 for i in range(1000):
@@ -96,3 +107,55 @@ for i in range(7):
     szakok.append(szakGenerator(i))
 with open(r'C:\Users\tomir\Documents\adatbázis beadandó\szakok.json', "w") as f:
     json.dump(szakok, f, indent=4)
+
+def diákszervezetgenerátor(diákszervezetszáma, hallgatóklista):
+    diákszervezetek=["Hallgatói Önkormányzat", "Hallgatói Képviselet", "Hallgatói Szövetség", "Hallgatói Hálózat", "Hallgatói Unió", "Hallgatói Tanács", "Hallgatói Testület"]
+    név=diákszervezetek[diákszervezetszáma]
+    teremszám=random.randint(1, 100)
+    vezető=nevGenerator()
+    elérhetőség=telefonGenerator()
+    email=emailGenerator(vezető[0], vezető[1])
+    tagok=[]
+    db=random.randint(20, 50)
+    for i in range(db):
+        tag=random.choice(hallgatóklista)
+        tagok.append(tag)
+    diákszervezet={"név": név, "vezető": vezető, "elérhetőség": elérhetőség, "email": email, "teremszám": teremszám, "tagok": tagok}
+    return diákszervezet, tagok
+
+def programgenerátor(tagok):
+    programok=["szakmai nap", "szakmai kirándulás", "szakmai előadás", "szakmai workshop", "szakmai konferencia", "szakmai verseny", "szakmai vetélkedő", "szakmai találkozó", "szakmai fórum", "szakmai bemutató"]
+    leírás=["A program célja a szakmai ismeretek bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése"]
+    név=random.choice(programok)
+    leír=leírás[random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])]
+    időpont=datumGenerátor(2023, 2024)
+    szervező=nevGenerator()
+    elérhetőség=telefonGenerator()
+    email=emailGenerator(szervező[0], szervező[1])
+    db=random.randint(10, 20)
+    részvevők=[]
+    for i in range(db):
+        tag=random.choice(tagok)
+        részvevők.append(tag)
+    terem=random.randint(1, 100)
+    program={"név": név, "időpont": str(időpont), "szervező": szervező, "elérhetőség": elérhetőség, "email": email, "részvevők": részvevők, "terem": terem, "leírás": leír}
+    return program
+
+diákszervezetek=[]
+programok=[]
+for i in range(7):
+    diákszervezet, tagok=diákszervezetgenerátor(i, hallgatoklista)
+    diákszervezetek.append(diákszervezet)
+    db=random.randint(1, 5)
+    for i in range(db):
+        program=programgenerátor(tagok)
+        programok.append(program)
+    
+
+with open(r'C:\Users\tomir\Documents\adatbázis beadandó\diákszervezetek.json', "w") as f:
+    json.dump(diákszervezetek, f, indent=4)
+
+with open(r'C:\Users\tomir\Documents\adatbázis beadandó\programok.json', "w") as f:
+    json.dump(programok, f, indent=4)
+
+print("adatbázisok generálva")
