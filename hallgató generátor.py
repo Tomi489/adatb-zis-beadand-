@@ -124,10 +124,12 @@ def diákszervezetgenerátor(diákszervezetszáma, hallgatóklista):
     return diákszervezet, tagok
 
 def programgenerátor(tagok):
+    diákszervezetek=["Hallgatói Önkormányzat", "Hallgatói Képviselet", "Hallgatói Szövetség", "Hallgatói Hálózat", "Hallgatói Unió", "Hallgatói Tanács", "Hallgatói Testület"]
     programok=["szakmai nap", "szakmai kirándulás", "szakmai előadás", "szakmai workshop", "szakmai konferencia", "szakmai verseny", "szakmai vetélkedő", "szakmai találkozó", "szakmai fórum", "szakmai bemutató"]
     leírás=["A program célja a szakmai ismeretek bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése", "A program célja a szakmai kapcsolatok bővítése", "A program célja a szakmai kapcsolatok erősítése"]
     név=random.choice(programok)
     leír=leírás[random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])]
+    diákszervezet=random.choice(diákszervezetek)
     időpont=datumGenerátor(2023, 2024)
     szervező=nevGenerator()
     elérhetőség=telefonGenerator()
@@ -138,7 +140,7 @@ def programgenerátor(tagok):
         tag=random.choice(tagok)
         részvevők.append(tag)
     terem=random.randint(1, 100)
-    program={"név": név, "időpont": str(időpont), "szervező": szervező, "elérhetőség": elérhetőség, "email": email, "részvevők": részvevők, "terem": terem, "leírás": leír}
+    program={"név": név, "időpont": str(időpont), "szervező": szervező, "elérhetőség": elérhetőség, "email": email, "részvevők": részvevők, "terem": terem, "leírás": leír, "diákszervezet": diákszervezet}
     return program
 
 diákszervezetek=[]
