@@ -10,9 +10,6 @@ import string
 import datetime
 import os
 
-os.remove(r'C:\Users\tomir\Documents\adatbázis beadandó\hallgatók.json')
-os.remove(r'C:\Users\tomir\Documents\adatbázis beadandó\szakok.json') 
-print("fájlok törölve")
 
 def randomDate():
     start_date = datetime.date(1980, 1, 1)
@@ -84,8 +81,6 @@ for i in range(1000):
 with open(r'C:\Users\tomir\Documents\adatbázis beadandó\hallgatók.json', "w") as f:
     json.dump(hallgatók, f, indent=4)
 
-
-#szakok generálása
 
 leírások=["Az informatika a jövő", "A műszaki informatika a jövő", "A gazdaságinformatika a jövő", "A közgazdaságtan a jövő", "A közgazdász a jövő", "Az mérnök a Jövő", "A műszaki menedzser a jövő"]
 def szakGenerator(szakokszama):
