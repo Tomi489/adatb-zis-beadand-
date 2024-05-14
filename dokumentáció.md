@@ -81,10 +81,10 @@ Az adatbázisban az alábbi táblák találhatóak:
 ## Kapcsolatok
 
 Az adatbázis táblái összekapcsolhatóak az alábbi kapcsolatok szerint:
--szak.név=hallgató.szak
--diákszervezetek.tagok=hallgató.szak
--programok.résztvevők=hallgató.szak
--diákszervezetek.név=programok.diákszervezet
+    -szak.név=hallgató.szak
+    -diákszervezetek.tagok=hallgató.szak
+    -programok.résztvevők=hallgató.szak
+    -diákszervezetek.név=programok.diákszervezet
 
 # Adatbázis létrehozásának leírása
 
@@ -98,6 +98,8 @@ A hallgatóGenerator függvény egy hallgatót reprezentáló szótárt generál
     Szak (random.choice(szakok))
     Hallgatószám frissítése (szakok alapján)
     Telefonszám (telefonGenerator)
+
+A különböző függvények vagy random számok alapján készítenek adatokat, vagy listák kombinációjaként, vagy listákból való elemekből választva, vagy az előzőeket kombinálva.
 
 A függvény szótárt hoz létre a hallgató adataival, és visszaadja.
 Ezt a szótárt utána egy cikluson belül akárhányszor meg lehet ismételni, utána a szótárakat egy listába fűzi össze a program, amit a *json.dump* kóddal kiexportál.
